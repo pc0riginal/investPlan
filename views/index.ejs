@@ -1,0 +1,43 @@
+<%- include('layout.ejs'); %>
+    <div class="container">
+        <div class="row justify-content-center">
+            <% if (user.name) { %>
+                <script>
+                    var user = '<%- user.name %>';
+                    $(".navbar-text").html(user);
+                    $(".logout").removeClass("d-none");
+                </script>
+                <% } %>
+            <h3>Welcome 
+            </h3> &nbsp;
+            <h3> <%= user.email %>
+            </h3> <br>
+        </div>
+        <div class="row justify-content-center">
+<div class="col">
+    <% items.forEach((item)=> { %>
+        <div class="row">
+            <div class="col">
+                <h3>
+                    <%= item.id %>
+                </h3>
+            </div>
+            <div class="col">
+                <h3>
+                    <%= item.name %>
+                </h3>
+            </div>
+            <div class="col">
+                <h3>
+                    <%= item.mobile %>
+                </h3>
+            </div>
+        </div>
+        <% }) %>
+</div>
+        </div>
+        
+    </div>
+    </body>
+
+    </html>

@@ -1,0 +1,82 @@
+<%- include('header.ejs'); %>
+    <div class="container">
+        <h1 class="text-center mt-4">Bank Management System</h1>
+        <div class="row justify-content-center">
+            <div class="col-sm-4 col-sm-offset-4 pt-3">
+                <div class="card">
+                    <div class="card-header text-center">Login</div>
+                    <div class="card-body">
+
+                        <form class="form-horizontal" method="post" action="/login" id="login">
+
+
+                            <div class="form-group">
+                                <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="email" id="email"
+                                            placeholder="Enter your Email" required />
+                                        <div class="checkEmail text-danger mt-2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <% if (messages.mail) {%>
+                                        <div class="text-danger mb-2">
+                                            <%= messages.mail %>
+                                        </div>
+                                        <% } %>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="cols-sm-2 control-label">Password</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            placeholder="Enter your Password" required/>    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <% if (messages.pass) {%>
+                                        <div class="text-danger mb-2">
+                                            <%= messages.pass %>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group ">
+                                <button type="submit"
+                                    class="btn btn-primary btn-lg btn-block login-button">Login</button>
+                            </div>
+                            <div class="login-register">
+                                <a href="/register">Register</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </body>
+
+    </html>
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $('.checkEmail').hide();
+            $('.checkPassword').hide();
+            var email_err = true;
+            var password_err = true;
+        });
+</script>

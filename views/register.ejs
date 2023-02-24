@@ -1,0 +1,291 @@
+<%- include('header.ejs'); %>
+    <div class="container">
+        <h1 class="text-center mt-4">Bank Management System</h1>
+        <div class="row justify-content-center">
+            <div class="col-sm-4 col-sm-offset-4 pt-3">
+                <div class="card">
+                    <div class="card-header text-center">Register</div>
+                    <div class="card-body">
+
+                        <form action="" method="post" id="register" class="form-horizontal" >
+
+                            <div class="form-group">
+                                <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="name" id="name"
+                                            placeholder="Enter your Name" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <div class=" checkName text-danger mb-2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="email" id="email"
+                                            placeholder="Enter your Email" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <div class=" checkEmail text-danger mb-2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="cols-sm-2 control-label">Password</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            placeholder="Enter your Password" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <div class=" checkPassword text-danger mb-2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                        <input type="password" class="form-control" name="confirm" id="confirm"
+                                            placeholder="Confirm your Password" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                    <div class="checkConfirmPassword text-danger mb-2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="cols-sm-10">
+                                                  <div class="error text-danger mb-2">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <button type="submit"
+                                    class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                            </div>
+                            <div class="login-register">
+                                <a href="/login">Login</a>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loader"></div>
+    </body>
+    
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $('.checkName').hide();
+        $('.checkEmail').hide();
+        $('.checkPassword').hide();
+        $('.checkConfirmPassword').hide();
+        
+        var name = '<%- name %>';
+        var email = '<%- email %>';
+        var password = '<%- password %>';
+        var confirm = '<%- confirm %>';
+
+        $('#name').val(name);
+        $('#email').val(email);
+        $('#password').val(password);
+        $('#confirm').val(confirm);
+
+        var name_err = true;
+        var email_err = true;
+        var pass_err = true;
+        var con_pass_err = true;
+
+        $('#name').keyup(function () {
+            name_check();
+        });
+        $('#email').keyup(function () {
+            email_check();
+        })
+        $('#password').keyup(function () {
+            pass_check();
+        })
+        
+        $('#confirm').keyup(function () {
+            pass_confirm_check();
+        })
+
+        function pass_confirm_check() {
+            var pass = $('#password').val();
+            var confirm_pass = $('#confirm').val();
+            if (pass  !==  confirm_pass) {
+                $('.checkConfirmPassword').show();
+                $('.checkConfirmPassword').text("Confirm Password Must be match!"); $('.checkConfirmPassword').focus();
+                $('#confirm').addClass('is-invalid').removeClass('is-valid');
+                con_pass_err = false;
+                return false;
+            }else{
+                $('#confirm').addClass('is-valid').removeClass('is-invalid');
+                $('.checkConfirmPassword').hide();
+            }
+        }
+
+        function pass_check() {
+            var pass = $('#password').val();
+            if (pass.length == '') {
+                $('.checkPassword').show();
+                $('.checkPassword').text("Password should not be empty!"); $('.checkPassword').focus();
+                $('#password').addClass('is-invalid').removeClass('is-valid');
+                pass_err = false;
+                return false;
+            } else if (pass.length < 8){
+                $('.checkPassword').show();
+                $('.checkPassword').text("Password must be more than 8 character!"); $('.checkPassword').focus();
+                $('#password').addClass('is-invalid').removeClass('is-valid');
+                pass_err = false;
+                return false;
+            } else if (!pass.match(/(?=.*[0-9])/)) {
+                $('.checkPassword').show();
+                $('.checkPassword').text("Password has at least one digit!"); $('.checkPassword').focus();
+                $('#password').addClass('is-invalid').removeClass('is-valid');
+                pass_err = false;
+                return false;
+            } else if (!pass.match(/(?=.*[A-Z])/)) {
+                $('.checkPassword').show();
+                $('.checkPassword').text("Password has at least one Uppercase!"); $('.checkPassword').focus();
+                $('#password').addClass('is-invalid').removeClass('is-valid');
+                pass_err = false;
+                return false;
+            } else if (!pass.match(/(?=.*[!@#$%^&*])/)) {
+                $('.checkPassword').show();
+                $('.checkPassword').text("Password has at least one Special Character!"); $('.checkPassword').focus();
+                $('#password').addClass('is-invalid').removeClass('is-valid');
+                pass_err = false;
+                return false;
+            } 
+            else{
+                $('#password').addClass('is-valid').removeClass('is-invalid');
+                $('.checkPassword').hide();
+            }
+        }
+
+        function email_check() {
+            var email = $('#email').val();
+            if (email.length == '') {
+                $('.checkEmail').show();
+                $('.checkEmail').text("Email should not be empty!"); $('.checkEmail').focus();
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+                email_err = false;
+                return false;
+            } else if (!email.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )){
+                $('.checkEmail').show();
+                $('.checkEmail').text("Enter valid email!"); $('.checkEmail').focus();
+                $('#email').addClass('is-invalid').removeClass('is-valid');
+                email_err = false;
+                return false;
+            } else{
+                $('#email').addClass('is-valid').removeClass('is-invalid');
+                $('.checkEmail').hide();
+            }
+        }
+        
+        function name_check() {
+            var name = $('#name').val();
+            if (name.length == '') {
+                $('.checkName').show();
+                $('.checkName').text("Name should not be empty!"); $('.checkName').focus();
+                $('#name').addClass('is-invalid').removeClass('is-valid');
+                name_err = false;
+                return false;
+            } else if
+                (name.length < 3 || name.length > 20) {
+                $('.checkName').show();
+                $('.checkName').text("Name length between 3 to 20!");
+                $('.checkName').focus();
+                $('#name').addClass('is-invalid').removeClass('is-valid');
+                name_err = false;
+                return false;
+            }
+            else if (!(/^[a-z A-Z]+$/.test(name))) {
+                $('.checkName').show();
+                $('.checkName').text("Name only contains alphabetes!");
+                $('.checkName').focus();
+                $('#name').addClass('is-invalid').removeClass('is-valid');
+                name_err = false;
+                return false;
+            }
+            else {
+                $('#name').addClass('is-valid').removeClass('is-invalid');
+                $('.checkName').hide();
+            }
+        }
+
+      
+
+        $("#register").on('submit',function (e) {
+            name_err = true;
+            email_err = true;
+            pass_err = true;
+            con_pass_err = true;
+
+            name_check();
+            email_check();
+            pass_check();
+            pass_confirm_check();
+
+            if (name_err == true && email_err == true && pass_err == true && con_pass_err == true) {
+
+                // var obj = {
+                //     "name": $("#name").val(),
+                //     "mobile": $("#mobile").val(),
+                //     "date": $("#bddate").val()
+                // }
+                // alter(e);
+                $('#loader').show();
+                e.preventDefault(); 
+                $.ajax({
+                    url: "/register",
+                    type: 'post',
+                    data: $("#register").serialize(),
+                    success:function(response){
+                        $('.error').html(response)
+                    },
+                    error:function(error){
+                        alert(error)
+                    }
+                }).done(function (resp){
+                    $('#loader').hide();
+                })
+                return true;
+            } else {
+                return false;
+            }
+
+        });
+    });
+
+</script>
+    </html>

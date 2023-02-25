@@ -3,6 +3,7 @@ require('dotenv').config({ path: './config.env' });
 const flash = require('express-flash');
 const session = require('express-session')
 const express = require('express');
+const ejs = require("ejs").__express;
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
 const passport = require("passport");
@@ -16,6 +17,7 @@ loginCheck(passport)
 
 const app = express();
 app.set('view engine', 'ejs');
+app.engine('ejs', ejs);
 app.use(cors());
 app.use(flash());
 app.use(express.json());

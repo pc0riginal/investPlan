@@ -33,7 +33,7 @@ const registerUser = (req,res) =>{
                             if(err) throw err;
                             newUser.password = hash;
                             newUser.save().then(
-                                res.redirect('/login')
+                                res.status(200).send('Registered successfully!')
                             ).catch((err)=>console.log(err))
                         });
                     })

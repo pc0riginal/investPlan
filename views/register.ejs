@@ -271,7 +271,11 @@
                     type: 'post',
                     data: $("#register").serialize(),
                     success:function(response){
-                        $('.error').html(response)
+                        if (response === 'Registered successfully!'){
+                            window.location.replace('/login')
+                        }else{
+                            $('.error').html(response);
+                        }
                     },
                     error:function(error){
                         alert(error)

@@ -62,15 +62,14 @@ const loginView = (req, res) => {
     });
 }
 
-const loginUser = (req,res) =>{
+const loginUser = (req, res, next) =>{
     const {email,password} = req.body;
     if (email && password){
         passport.authenticate("local",{
-            successRedirect:"/",
             failureRedirect:"/login",
             failureFlash:true,
             failureMessage:true,
-        })(req,res);
+        })(req, res, next);
     }else{
         res.render('login',{
             email,password

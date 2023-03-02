@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 LocalStrategy = require('passport-local').Strategy;
 
 // load model
@@ -9,7 +10,6 @@ const loginCheck = passport => {
             // check customer
             User.findOne({email:email})
             .then((user)=>{
-                console.log(user)
                 if(!user){
                     console.log("wrong email");
                     return done(null, false, { message: "wrong email",type:"mail" });
@@ -18,8 +18,14 @@ const loginCheck = passport => {
                 bcrypt.compare(password,user.password,(error,isMatch)=>{
                     if (error) throw error;
                     if (isMatch){
+                        const token = jwt.sign({ user_id: user._id, email: user.email,date: Date.now() }, process.env.TOKEN_KEY, {
+                            expiresIn: "12h",
+                        })
+                        user.token = token
+                        user.save()
                         return done(null,user);
-                    }else{
+                    }
+                    else{
                         console.log("wrong Password")
                         return done(null,false,{message:"wrong password",type:"pass"});
                     }

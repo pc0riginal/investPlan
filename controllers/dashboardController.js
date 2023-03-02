@@ -1,5 +1,4 @@
 const dashboardView = (req,res)=>{
-    console.log(req.user)
     items = [
         {
             id:1,

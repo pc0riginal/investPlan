@@ -9,8 +9,8 @@ module.exports = {
             //     }).catch(function (err) { reject(err) });
             mongoose.connect(uri, { useNewUrlParser: true })
             .then((e)=>{
-                // const client = mongoose.connection.getClient()
-                resolve("connected!")
+                const client = mongoose.connection
+                resolve(client)
             })
             .catch((e)=>reject(e))
         })

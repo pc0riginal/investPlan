@@ -1,7 +1,8 @@
 // Loads the configuration from config.env to process.env
 require('dotenv').config({ path: './config.env' });
 const flash = require('express-flash');
-const session = require('express-session')
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const express = require('express');
 const ejs = require("ejs").__express;
 const cookieParser = require("cookie-parser");
@@ -23,18 +24,23 @@ app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
-
-
 app.use(session({
-    key:'user_sid',
-    secret:'onebody',
-    saveUninitialized:false,
-    resave :true,
-    cookie:{
-        expire:60000,
-        maxAge:2*60*60*1000,
+    key: 'user_sid',
+    secret: 'onebody',
+    saveUninitialized: false,
+    resave: true,
+    // store: new MongoStore({
+    //     mongoUrl: process.env.ATLAS_URI,
+    //     ttl: 12 * 24 * 60 * 60,
+    //     autoRemove: 'native'
+    // }),
+    cookie: {
+        expire: 60000,
+        maxAge: 2 * 60 * 60 * 1000,
     },
 }))
+
+
 
 // app.use((req,res,next)=>{
 //     if(req.cookies.user_sid && !req.session.user){
